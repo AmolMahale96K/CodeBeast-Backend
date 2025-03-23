@@ -29,6 +29,7 @@ mongoose
 
 app.use("/api", runnerRoutes);
 app.use("/api", authRoutes);
+app.use("/api/assignments", require("./routes/assignmentRoutes"));
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
