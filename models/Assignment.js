@@ -13,7 +13,7 @@ const QuestionSchema = new mongoose.Schema({
 const AssignmentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     totalQuestions: { type: Number, default: 1 }, // Always 1 question per assignment
-    solved: { type: Number, default: 0 },
+    solved: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], // Array of user IDs
     completed: { type: Boolean, default: false },
     question: QuestionSchema, // Single question per assignment
     createdAt: { type: Date, default: Date.now }

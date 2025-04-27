@@ -77,7 +77,6 @@ exports.deleteAssignment = async (req, res) => {
     }
 };
 
-// Update only the solve attribute
 exports.markAssignmentAsSolved = async (req, res) => {
     try {
         const assignment = await Assignment.findById(req.params.id);
@@ -86,12 +85,24 @@ exports.markAssignmentAsSolved = async (req, res) => {
             return res.status(404).json({ message: "Assignment not found" });
         }
 
-        assignment.solved = 1;
-        await assignment.save();
+        const userId = req.body.userId; // Assuming you send userId in the request body
+
+        // Ensure the solved array is initialized
+        if (!assignment.solved) {
+            assignment.solved = []; // Initialize solved array if it's undefined
+        }
+
+        // Check if userId already exists in the solved array to prevent duplicates
+        if (!assignment.solved.includes(userId)) {
+            assignment.solved.push(userId); // Add user to solved array
+            await assignment.save();
+        }
 
         res.status(200).json({ message: "Assignment marked as solved", assignment });
     } catch (err) {
         res.status(500).json({ message: "Server error: " + err.message });
     }
 };
+
+
 
