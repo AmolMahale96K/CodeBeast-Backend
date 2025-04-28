@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const runnerRoutes = require("./routes/runnerRoutes");
 const authRoutes = require("./routes/authRoutes");
+const userAssignmentRoutes = require("./routes/userAssignmentRoutes");
 const path = require("path");
 const fs = require("fs");
 
@@ -30,6 +31,7 @@ mongoose
 app.use("/api", runnerRoutes);
 app.use("/api", authRoutes);
 app.use("/api/assignments", require("./routes/assignmentRoutes"));
+app.use("/api/userassignments", userAssignmentRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
