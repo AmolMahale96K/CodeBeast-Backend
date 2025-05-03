@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true })); // To handle form data
 app.use("/uploads", express.static("uploads")); // Serve uploaded files
 
 mongoose
-  .connect("mongodb://localhost:27017/CodeBeast", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

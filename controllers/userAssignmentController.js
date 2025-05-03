@@ -53,4 +53,25 @@ exports.getUserAssignment = async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   };
-
+  exports.getUserAssignmentsByUserId = async (req, res) => {
+    try {
+      const { userId } = req.query;
+  
+      if (!userId) {
+        return res.status(400).json({ message: "Missing userId" });
+      }
+  
+      const userAssignments = await UserAssignment.find({ userId });
+  
+      if (userAssignments.length === 0) {
+        // Return empty assignments structure to avoid 404 error
+        return res.status(200).json([]);
+      }
+  
+      res.status(200).json(userAssignments);
+    } catch (error) {
+      console.error("Error fetching user assignments by userId:", error.message);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
+  
